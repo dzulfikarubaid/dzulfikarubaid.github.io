@@ -1,16 +1,94 @@
 ---
+import Navbar from '../components/navbar.tsx'
+import FancyText from '@carefully-coded/react-text-gradient'
+import TextBig from '../components/textbig.tsx'
+import About from '../components/about'
+import Projects from '../components/projects.tsx'
+import Layout from '../layouts/layout'
+import store from '../redux/redux'
+import { ModuleKind } from 'typescript'
 
 ---
 
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Astro</title>
+    <style>
+      /* Styling for the custom cursor */
+      .custom-cursor {
+        width: 500px;
+        height: 500px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: -1; /* Ensure it is behind other content */
+        transform: translate(-50%, -50%);
+        filter: blur(50px);
+      }
+
+      /* Ensure that body hides default cursor */
+
+
+      /* Higher z-index for main content, ensuring it is above the custom cursor */
+      .main-content {
+        position: relative;
+        z-index: 1; /* Content will appear above the cursor */
+      }
+    </style>
+  </head>
+  <body >
+    <!-- Main content, which will have a higher z-index -->
+    <div class="main-content">
+      <Layout client:load></Layout>
+    </div>
+
+    <!-- Custom cursor element -->
+    <div id="custom-cursor" class="custom-cursor bg-gradient-to-br from-emerald-400 via-blue-500 to-purple-600" ></div>
+
+    <script>
+    const updateBodyClass = (mode:any) => {
+        const bodyElement = document.body;
+        if (mode === "light") {
+          bodyElement.classList.remove('bg-gradient-to-br', 'from-neutral-950', 'to-neutral-800',"text-white/50");
+          bodyElement.classList.add('bg-gradient-to-br', 'from-neutral-200', 'to-indigo-50',"text-black");
+        } else {
+          bodyElement.classList.remove('bg-gradient-to-br', 'from-neutral-200', 'to-indigo-50', "text-black");
+          bodyElement.classList.add('bg-gradient-to-br', 'from-neutral-950', 'to-neutral-800', "text-white/50");
+        }
+      };
+      if(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches){
+        updateBodyClass("dark")
+      }
+      else{
+        updateBodyClass("light")
+      }
+      // Get data from redux toolkit
+      import store from '../redux/redux';
+      let mode = ""
+        store.subscribe(() => 
+        {
+          console.log("store changed", store.getState())
+          mode = store.getState().mode
+          updateBodyClass(mode)
+        }
+        
+        )
+        
+      // Script to handle custom cursor movement
+      const customCursor:any = document.getElementById('custom-cursor');
+
+      document.addEventListener('mousemove', (e) => {
+        const { clientX: x, clientY: y } = e;
+        // Directly setting the cursor's position
+        customCursor.style.left = `${x}px`;
+        customCursor.style.top = `${y}px`;
+      });
+    </script>
+  </body>
 </html>
