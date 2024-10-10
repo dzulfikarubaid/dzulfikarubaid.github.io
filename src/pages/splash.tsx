@@ -30,7 +30,7 @@ export default function TextBig() {
             >
               
             </FancyText> */}
-            <h1 className="text-center text-[120px] font-bold ">Hello World!</h1>
+            <h1 className="text-center text-[60px] sm:text-[120px] font-bold ">Hello World!</h1>
           </motion.div>
         )}
       </AnimatePresence>
@@ -46,7 +46,7 @@ export default function TextBig() {
             transition={{ duration: 0.5 }} // Durasi transisi muncul
             className="absolute"
           >
-            <h1 className="text-center text-[120px] font-bold ">I'm Here!</h1>
+            <h1 className="text-center text-[60px] sm:text-[120px] font-bold ">I'm Here!</h1>
           </motion.div>
         )}
       </AnimatePresence>
