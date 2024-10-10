@@ -132,7 +132,7 @@ const Home = () => {
     }
     function ProjectCard({ title, description, imageSrc, footer, className, github, website }: any) {
         return (
-            <div className={`rounded-3xl border-white border-[1px] p-5 bg-gradient-to-br from-indigo-50 to-neutral-50 dark:bg-black lg:w-[500px] w-full ${className}`}>
+            <div className={`rounded-3xl border-white border-[1px] p-5 bg-gradient-to-br ${!dark ? "from-indigo-50 to-neutral-50 border-white text-black" : "from-neutral-900 to-neutral-800 border-white/10 text-white "}  lg:w-[500px] w-full ${className}`}>
                 {imageSrc != ""?
                 <img src={`projects/${imageSrc}`} alt={title} className="rounded-xl mb-3 lg:h-[250px]  w-full" />:
                 <img src={`projects/project.png`} alt={title} className="rounded-xl mb-3 lg:h-[250px] w-full" />
