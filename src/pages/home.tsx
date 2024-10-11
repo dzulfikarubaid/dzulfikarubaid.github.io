@@ -372,7 +372,7 @@ const Home = () => {
                                 {
                                     afterMessage ?
                                     <div className='flex flex-col p-5'>
-                                    <h1>Thank you for your message <FaRegHandBackFist /></h1>
+                                    <h1>Thank you for your message <span><FaRegHandBackFist /></span></h1>
                                     </div>
                                     :
                                     <div className='flex flex-col p-5 gap-4'>
