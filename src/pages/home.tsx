@@ -286,7 +286,7 @@ const Home = () => {
                     <div className='flex flex-col gap-3'>
                         <h1 className='text-3xl  '>AHMAD DZULFIKAR UBAIDILLAH</h1>
                         <SubText>
-                            I am passionate about software engineering, artificial intelligence, the Internet of Things, and robotics. I enjoy taking on new challenges and seeking opportunities to learn and grow.
+                            I am passionate about software engineering, artificial intelligence, and Internet of Things. I enjoy taking on new challenges and seeking opportunities to learn and grow.
                         </SubText>
                     </div>
                 </Card>
