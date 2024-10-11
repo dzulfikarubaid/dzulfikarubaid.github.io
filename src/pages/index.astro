@@ -16,8 +16,11 @@ import { ModuleKind } from 'typescript'
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
-    <title>Astro</title>
+    <title>dz7</title>
     <style>
+      html{
+        scroll-behavior: smooth;
+      }
       /* Styling for the custom cursor */
       .custom-cursor {
         width: 500px;
@@ -38,7 +41,10 @@ import { ModuleKind } from 'typescript'
       /* Higher z-index for main content, ensuring it is above the custom cursor */
       .main-content {
         position: relative;
+        background-image: url('grid.svg');
         z-index: 1; /* Content will appear above the cursor */
+        /* background-size: contain; */
+       
       }
     </style>
   </head>
@@ -55,11 +61,11 @@ import { ModuleKind } from 'typescript'
     const updateBodyClass = (mode:any) => {
         const bodyElement = document.body;
         if (mode === "light") {
-          bodyElement.classList.remove('bg-gradient-to-br', 'from-neutral-950', 'to-neutral-800',"text-white/50");
+          bodyElement.classList.remove('bg-gradient-to-br', 'from-neutral-950', 'to-neutral-800',"text-neutral-200");
           bodyElement.classList.add('bg-gradient-to-br', 'from-neutral-200', 'to-indigo-50',"text-black");
         } else {
           bodyElement.classList.remove('bg-gradient-to-br', 'from-neutral-200', 'to-indigo-50', "text-black");
-          bodyElement.classList.add('bg-gradient-to-br', 'from-neutral-950', 'to-neutral-800', "text-white/50");
+          bodyElement.classList.add('bg-gradient-to-br', 'from-neutral-950', 'to-neutral-800', "text-neutral-200");
         }
       };
       if(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches){

@@ -1,6 +1,8 @@
-import { div } from 'framer-motion/client'
+import { div, title } from 'framer-motion/client'
 import React, { useEffect } from 'react'
-import { BiDownload, BiHeart, BiLinkExternal, BiLogoDjango, BiLogoGithub, BiLogoGmail, BiLogoInstagram, BiLogoInstagramAlt, BiLogoJavascript, BiLogoLinkedin, BiLogoPython, BiMailSend, BiMessage, BiMessageAdd, BiMoon, BiRightTopArrowCircle, BiShow, BiSolidRightTopArrowCircle, BiSun } from 'react-icons/bi'
+import { BiDownload, BiHeart, BiLinkExternal, BiLogoDjango, BiLogoGithub, BiLogoGmail, BiLogoInstagram, BiLogoInstagramAlt, BiLogoJavascript, BiLogoLinkedin, BiLogoPython, BiMailSend, BiMessage, BiMessageAdd, BiMoon, BiRightTopArrowCircle, BiSend, BiShow, BiSolidRightTopArrowCircle, BiSun, BiX } from 'react-icons/bi'
+import db from '../firebase/init';
+import { collection, addDoc } from "firebase/firestore"; 
 import { Swiper, SwiperSlide } from 'swiper/react';
 // Import Swiper styles
 import 'swiper/css';
@@ -11,12 +13,20 @@ import { IoLogoFirebase } from 'react-icons/io5';
 import { MdOutlineArrowOutward } from 'react-icons/md';
 import { setMode } from '../redux/redux';
 import store from '../redux/redux';
+import { FaDownload, FaEye, FaRegEye } from 'react-icons/fa6';
+import { LuHardDriveDownload } from 'react-icons/lu';
+import { motion } from 'framer-motion';
+import { HiSelector } from 'react-icons/hi';
 const Home = () => {
     const [ai, setAi] = React.useState(true)
     const [iot, setIot] = React.useState(false)
     const [sd, setSd] = React.useState(false)
     const [other, setOther] = React.useState(false)
     const [dark, setDark] = React.useState(false)
+    const [openMessage, setOpenMessage] = React.useState(false)
+    const [type, setType] = React.useState("")
+    const [name, setName] = React.useState("")
+    const [message, setMessage] = React.useState("")
     useEffect(() => {
         if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
             setDark(true)
@@ -75,12 +85,13 @@ const Home = () => {
     function SubText(props: any) {
         const { children } = props
         return (
-            <p className=' text-neutral-500'>
+            <p className={`${!dark ? "text-neutral-500" : "text-neutral-400"}`}>
                 {children}
             </p>
         )
 
     }
+
     function SmallText(props: any) {
         const { children } = props
         return (
@@ -94,7 +105,7 @@ const Home = () => {
         return <iframe className='rounded-xl lg:h-full h-[250px] lg:w-fit w-full grayscale hover:grayscale-0' src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126646.20750916582!2d112.71268375!3d-7.275619450000001!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd7fbf8381ac47f%3A0x3027a76e352be40!2sSurabaya%2C%20East%20Java!5e0!3m2!1sen!2sid!4v1727779537312!5m2!1sen!2sid" style={{ border: 0 }} allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade"></iframe>
     }
     function Icon({ children }: any) {
-        return <div className='p-2 bg-neutral-200 border-[1px] border-white rounded-xl w-fit'>
+        return <div className={`p-2 ${!dark ? "bg-white border-[1px] border-black/10" : "bg-white/50 border-[1px] border-white/10"} rounded-xl w-fit`}>
             {children}
         </div>
     }
@@ -133,9 +144,9 @@ const Home = () => {
     function ProjectCard({ title, description, imageSrc, footer, className, github, website }: any) {
         return (
             <div className={`rounded-3xl border-white border-[1px] p-5 bg-gradient-to-br ${!dark ? "from-indigo-50 to-neutral-50 border-white text-black" : "from-neutral-900 to-neutral-800 border-white/10 text-white "}  lg:w-[500px] w-full ${className}`}>
-                {imageSrc != ""?
-                <img src={`projects/${imageSrc}`} alt={title} className="rounded-xl mb-3 lg:h-[250px]  w-full" />:
-                <img src={`projects/project.png`} alt={title} className="rounded-xl mb-3 lg:h-[250px] w-full" />
+                {imageSrc != "" ?
+                    <img src={`projects/${imageSrc}`} alt={title} className="rounded-xl mb-3 lg:h-[250px]  w-full" /> :
+                    <img src={`projects/project.png`} alt={title} className="rounded-xl mb-3 lg:h-[250px] w-full" />
                 }
                 <div className='flex flex-row justify-between items-end'>
                     <div>
@@ -158,7 +169,7 @@ const Home = () => {
             description: "PROJECT AT ECS LAB",
             imageSrc: "strike.png",
             category: ["IoT"],
-            
+
         },
         {
             title: "ECS & EPTA WEBSITE",
@@ -169,11 +180,20 @@ const Home = () => {
 
         },
         {
+            title: "AELI WEBSITE",
+            description: "PROJECT AT INTERNSHIP",
+            imageSrc: "aeli.png",
+            website: "https://aeli-oke.vercel.app",
+            category: ["SD"],
+            github: "https://github.com/dzulfikarubaid/aeli_oke"
+
+        },
+        {
             title: "BABY MEASUREMENT USING IMAGE PROCESSING",
             description: "PROJECT AT PATENT TEAM",
             imageSrc: "",
             category: ["SD", "AI"],
-            github:"https://github.com/dzulfikarubaid/flet-gui"
+            github: "https://github.com/dzulfikarubaid/flet-gui"
         },
         {
             title: "CHILLI SEGMENTATION AND CLASSIFICATION USING YOLO V5",
@@ -213,42 +233,42 @@ const Home = () => {
             imageSrc: "golektruk.png",
             website: "https://golektruk.vercel.app",
             category: ["SD"],
-            github:"https://github.com/dzulfikarubaid/golektruk"
+            github: "https://github.com/dzulfikarubaid/golektruk"
         },
         {
             title: "DETECTION OF PRESIDENTIAL ELECTION MISCALCULATION ON THE KPU WEBSITE",
             description: "INDEPENDENT PROJECT",
             imageSrc: "",
             category: ["OTHER"],
-            github:"https://github.com/dzulfikarubaid/deteksi_kesalahan_input_pilpres_2024"
+            github: "https://github.com/dzulfikarubaid/deteksi_kesalahan_input_pilpres_2024"
         },
         {
             title: "TRANSUB MOBILE APPLICATION",
             description: "INDEPENDENT PROJECT",
             imageSrc: "",
             category: ["SD"],
-            github:"https://github.com/dzulfikarubaid/transub"
+            github: "https://github.com/dzulfikarubaid/transub"
         },
         {
             title: "CARDIOSAVER MOBILE APPLICATION",
             description: "INDEPENDENT PROJECT",
             imageSrc: "",
             category: ["SD"],
-            github:"https://github.com/dzulfikarubaid/cardiosaver-api"
+            github: "https://github.com/dzulfikarubaid/cardiosaver-api"
         },
         {
             title: "PERSONAL PROTECTIVE EQUIPMENT VIOLATION DETECTION AND WARNING SYSTEM USING YOLO V4 TINY AND YOLO V8",
             description: "INDEPENDENT PROJECT",
             imageSrc: "",
             category: ["AI"],
-            github:"https://github.com/dzulfikarubaid/ppe.git"
+            github: "https://github.com/dzulfikarubaid/ppe.git"
         },
         {
             title: "SHIP RECORDING APPLICATION",
             description: "INDEPENDENT PROJECT",
             imageSrc: "",
             category: ["SD"],
-            github:"https://github.com/dzulfikarubaid/kapal-app"
+            github: "https://github.com/dzulfikarubaid/kapal-app"
         },
         {
             title: "SLIP, TRIP, AND FALL DETECTION USING AI AND IOT",
@@ -261,11 +281,11 @@ const Home = () => {
     return (
         <div className='flex flex-col justify-center items-center w-full gap-5 '>
             <section className='flex lg:flex-row flex-col gap-5 w-full lg:w-fit px-5'>
-                <Card>
+                <Card className='lg:!w-[490px]'>
                     <div className='flex flex-col gap-3'>
                         <h1 className='text-3xl  '>AHMAD DZULFIKAR UBAIDILLAH</h1>
                         <SubText>
-                            try more, learn more, get more, build more, and share more
+                            I am passionate about software engineering, artificial intelligence, the Internet of Things, and robotics. I enjoy taking on new challenges and seeking opportunities to learn and grow. For me, each project is an opportunity to explore the limits of technology and make a meaningful contribution to society.
                         </SubText>
                     </div>
                 </Card>
@@ -276,7 +296,7 @@ const Home = () => {
                     </div> */}
                 </Card>
                 <div className='flex flex-col gap-5'>
-                    <Card>
+                    <Card className='!w-full'>
                         <div className='flex justify-center items-center text-4xl gap-4'>
                             <button onClick={onSun} className={` ${!dark && "bg-gradient-to-br from-white to-transparent  shadow-md !text-orange-400"} p-5 rounded-2xl w-full flex items-center justify-center text-neutral-500 `}><BiSun></BiSun></button>
                             <button onClick={onMoon} className={` ${dark && "bg-gradient-to-br from-white/20 to-transparent  shadow-md !text-indigo-200"} p-5 rounded-2xl w-full flex items-center justify-center text-neutral-500`}><BiMoon></BiMoon></button>
@@ -288,9 +308,9 @@ const Home = () => {
                                 <SmallText>LATEST CV</SmallText>
                                 <h1 className='text-2xl'>RESUME</h1>
                             </div>
-                            <div className='flex gap-5 text-4xl'>
-                                <button><BiDownload></BiDownload></button>
-                                <button><BiShow></BiShow></button>
+                            <div className='flex gap-7 text-3xl  '>
+                                <button className='hover:text-neutral-500'><LuHardDriveDownload></LuHardDriveDownload></button>
+                                <button className='hover:text-neutral-500'><FaRegEye></FaRegEye></button>
                             </div>
                         </div>
                     </Card>
@@ -299,15 +319,15 @@ const Home = () => {
             </section>
             <section className='flex gap-5 lg:flex-row flex-col px-5  lg:w-fit w-full'>
                 <div className='flex lg:flex-col flex-row lg:w-fit w-full gap-5 text-4xl'>
-                    <a href="" className='w-full'><Card className="flex justify-center items-center lg:p-5 px-3 py-4 rounded-2xl"><BiLogoLinkedin></BiLogoLinkedin></Card></a>
-                    <a href="" className='w-full'>
+                    <a target="_blank" href="https://www.linkedin.com/in/ahmad-dzulfikar-ubaidillah/" className='w-full'><Card className="flex justify-center items-center lg:p-5 px-3 py-4 rounded-2xl"><BiLogoLinkedin></BiLogoLinkedin></Card></a>
+                    <a target="_blank" href="https://github.com/dzulfikarubaid" className='w-full'>
                         <Card className="flex justify-center items-center lg:p-5  px-3 py-4 rounded-2xl"><BiLogoGithub></BiLogoGithub></Card>
                     </a>
-                    <a href="" className='w-full'>
+                    <a target="_blank" href="https://www.instagram.com/dzulfikarubaid/" className='w-full'>
                         <Card className="flex justify-center items-center lg:p-5  px-3 py-4  rounded-2xl"><BiLogoInstagram></BiLogoInstagram></Card>
                     </a>
 
-                    <a href="" className='w-full'>
+                    <a href="mailto:dzulfikarubaid@gmail.com?subject=Hello from your website&body=I want to send you a message." target='_blank' className='w-full'>
                         <Card className="flex justify-center items-center lg:p-5  px-3 py-4  rounded-2xl">
                             <BiLogoGmail></BiLogoGmail>
                         </Card>
@@ -316,7 +336,7 @@ const Home = () => {
                 </div>
                 <div className='flex flex-col gap-5'>
                     <div className={`rounded-3xl border-[1px]  ${!dark ? "bg-indigo-50 border-white text-black" : "bg-neutral-900 border-white/10 text-white "} p-5 w-full`}>
-                        <div className='lg:w-[400px] w-full  text-5xl flex justify-center items-center py-14 relative text-black'>
+                        <div className='lg:w-[400px] w-full  text-5xl flex justify-center items-center py-[60px] relative text-black'>
                             <Slider></Slider>
                             <div className={`absolute -translate-y-1/2 top-1/2 inset-y-0 -left-4 w-16 h-24 bg-gradient-to-r ${!dark ? "from-indigo-50 via-indigo-50" : "from-neutral-900 via-neutral-900"}  to-transparent blur-sm pointer-events-none z-20 rounded-2xl`}></div>
 
@@ -329,37 +349,110 @@ const Home = () => {
                             </h1>
                         </div>
                     </div>
-
-                    <Card className="">
-                        <button className=' flex flex-row gap-3 items-center justify-center text-center w-full lg:w-[400px]'>
+                    <button onClick={() => setOpenMessage(true)} className=' flex flex-row gap-3 items-center justify-center text-center w-full'>
+                        <Card className="w-full lg:!w-[440px]">
                             <h1 className='text-2xl'>SEND ME A MESSAGE</h1>
-                        </button>
+                        </Card>
+                    </button>
+                    {
+                        openMessage &&
+                        <div className={`fixed inset-0 flex items-center  z-[9999] justify-center mx-5`}>
+                            <motion.div initial={{ y: 400 }}
+                                animate={{ y: 0 }}
+                                transition={{ duration: 1 }} className={`${!dark ? "bg-indigo-50 border-black/10 " : "bg-neutral-900 border-white/10"} lg:h-fit lg:w-[600px] w-full rounded-2xl p-5 border-[1px]`}>
+                                <div className='flex justify-end'>
+                                    <button
+                                        onClick={() => {setOpenMessage(false);
+                                        setType("");
+                                        
+                                        }} className='text-3xl'><BiX></BiX></button>
+                                </div>
+                                <div className='flex flex-col p-5 gap-4'>
+                                    <div className='flex flex-row border-white/10 border-[1px] rounded-2xl items-center w-full p-3 '>
+                                        <select style={{
+                                            // "WebkitAppearance": "none",
+                                            "appearance": "none",
+                                            "MozAppearance": "none",
+                                        }} className='bg-transparent w-full focus:outline-none' onChange={(e) => setType(e.target.value)} id="type">
+                                            <option value="anon" className='flex justify-between items-center'>
+                                                <h1>Anonymous</h1>
+
+                                            </option>
+                                            <option value="name">Name</option>
+
+                                        </select>
+                                        <HiSelector size={20} color='white'></HiSelector>
+                                    </div>
+                                    {type == "name" &&
+                                    <input type="text" className="bg-transparent focus:outline-none w-full resize-none border-[1px] border-white/10 p-3 rounded-xl" name="name" placeholder='Your Name' id="" onChange={(e)=>setName(e.target.value)}/>
+                                    }
+                                    <textarea 
+                                    onChange={(e)=>setMessage(e.target.value)}
+                                    className="bg-transparent focus:outline-none w-full resize-none border-[1px] border-white/10 p-3 rounded-2xl h-[200px]" name="message"
+                                    placeholder='Write your message' id=""></textarea>
+                                    <div className='flex justify-end mt-5'>
+                                        <button onClick={()=>{
+                                            addDoc(collection(db, "messages"), {
+                                                name: name,
+                                                message: message
+                                            })
+                                        }}><BiSend size={25}></BiSend></button>
+                                    </div>
+                                </div>
+                            </motion.div>
+                        </div>
+                    }
+                </div>
+                <div id='work' className='flex flex-col gap-5'>
+                    <Card className="lg:!w-[570px]">
+                        <div className=''>
+
+                            <h1 className='text-2xl'>EDUCATION</h1>
+                        </div>
+                        <div className='flex flex-row justify-between gap-5  items-end'>
+                            <div className='flex flex-col gap-2 mt-5 '>
+                                <SmallText>2021 - Present</SmallText>
+                                <h1 className='text-2xl'>Bachelor of Engineering in Engineering Physics</h1>
+                                <SubText>Institut Teknologi Sepuluh Nopember</SubText>
+                            </div>
+                            <div className='w-[150px] '>
+                                <img src={!dark ? "its.png" : "its-putih.png"} alt="" />
+                            </div>
+                        </div>
+                    </Card>
+                    <Card className="lg:!w-[570px]">
+                        <div className=''>
+
+                            <h1 className='text-2xl'>EXPERIENCE</h1>
+                        </div>
+                        <div className='flex flex-row justify-between items-end'>
+                            <div className='flex flex-col gap-2 mt-5 '>
+                                <SmallText>Aug 2023 - Nov 2023</SmallText>
+                                <h1 className='text-2xl'>Full Stack Developer Intern</h1>
+                                <SubText>Indonesian Experiental Learning Association</SubText>
+                            </div>
+                            <div className={`w-[90px]  rounded-3xl p-3`}>
+                                <img src={!dark ? "aeli.png" : "aeli-putih.png"} alt="" />
+                            </div>
+                        </div>
                     </Card>
                 </div>
-                <Card>
-                    <div className=''>
-                        <SmallText>3 YEARS OF</SmallText>
-                        <h1 className='text-2xl'>EXPERIENCE</h1>
-                    </div>
-                    <div className='flex flex-col gap-4 mt-5 text-2xl'>
-                        <h1>BLA BLA BLA BLA BLA </h1>
-                    </div>
-                </Card>
+
             </section>
             <section className='flex flex-col justify-center items-center px-5'>
                 <div className={`${!dark ? "bg-indigo-50 border-white text-black" : "bg-neutral-900 border-white/10 text-white"} border-[1px] rounded-3xl w-full sm:w-fit`}>
                     <div className='p-4   rounded-3xl gap-5 flex w-full justify-between sm:hidden'>
-                        <button onClick={() => onCategoryClick("ai")} className={`${ai && (dark ?"bg-gradient-to-br from-white/20 to-transparent border-[1px] border-white/10":"bg-gradient-to-br from-white to-transparent shadow-lg")} rounded-2xl   p-4`}>AI</button>
-                        <button onClick={() => onCategoryClick("sd")} className={`${sd && (dark ?"bg-gradient-to-br from-white/20 to-transparent border-[1px] border-white/10":"bg-gradient-to-br from-white to-transparent shadow-lg")} rounded-2xl   p-4`}>Software</button>
-                        <button onClick={() => onCategoryClick("iot")} className={`${iot && (dark ?"bg-gradient-to-br from-white/20 to-transparent border-[1px] border-white/10":"bg-gradient-to-br from-white to-transparent shadow-lg")} rounded-2xl   p-4`}>IoT</button>
-                        <button onClick={() => onCategoryClick("other")} className={`${other && (dark ?"bg-gradient-to-br from-white/20 to-transparent border-[1px] border-white/10":"bg-gradient-to-br from-white to-transparent shadow-lg")} rounded-2xl   p-4`}>Other</button>
+                        <button onClick={() => onCategoryClick("ai")} className={`${ai && (dark ? "bg-gradient-to-br from-white/20 to-transparent border-[1px] border-white/10" : "bg-gradient-to-br from-white to-transparent shadow-lg")} rounded-2xl px-10  p-4`}>AI</button>
+                        <button onClick={() => onCategoryClick("sd")} className={`${sd && (dark ? "bg-gradient-to-br from-white/20 to-transparent border-[1px] border-white/10" : "bg-gradient-to-br from-white to-transparent shadow-lg")} rounded-2xl   p-4`}>Software</button>
+                        <button onClick={() => onCategoryClick("iot")} className={`${iot && (dark ? "bg-gradient-to-br from-white/20 to-transparent border-[1px] border-white/10" : "bg-gradient-to-br from-white to-transparent shadow-lg")} rounded-2xl   p-4 px-10`}>IoT</button>
+                        <button onClick={() => onCategoryClick("other")} className={`${other && (dark ? "bg-gradient-to-br from-white/20 to-transparent border-[1px] border-white/10" : "bg-gradient-to-br from-white to-transparent shadow-lg")} rounded-2xl  px-7 p-4`}>Other</button>
                     </div>
 
                     <div className='p-4  lg:w-fit sm:w-fit  rounded-3xl gap-5 sm:flex   w-full justify-between hidden'>
-                        <button onClick={() => onCategoryClick("ai")} className={`${ai && (dark ?"bg-gradient-to-br from-white/20 to-transparent border-[1px] border-white/10":"bg-gradient-to-br from-white to-transparent shadow-lg")} rounded-2xl   p-4`}>Artificial Intelligence</button>
-                        <button onClick={() => onCategoryClick("sd")} className={`${sd && (dark ?"bg-gradient-to-br from-white/20 to-transparent border-[1px] border-white/10":"bg-gradient-to-br from-white to-transparent shadow-lg")} rounded-2xl   p-4`}>Software Development</button>
-                        <button onClick={() => onCategoryClick("iot")} className={`${iot && (dark ?"bg-gradient-to-br from-white/20 to-transparent border-[1px] border-white/10":"bg-gradient-to-br from-white to-transparent shadow-lg")} rounded-2xl   p-4`}>Internet of Things</button>
-                        <button onClick={() => onCategoryClick("other")} className={`${other && (dark ?"bg-gradient-to-br from-white/20 to-transparent border-[1px] border-white/10":"bg-gradient-to-br from-white to-transparent shadow-lg")} rounded-2xl   p-4`}>Other</button>
+                        <button onClick={() => onCategoryClick("ai")} className={`${ai && (dark ? "bg-gradient-to-br from-white/20 to-transparent border-[1px] border-white/10" : "bg-gradient-to-br from-white to-transparent shadow-lg")} rounded-2xl   p-4`}>Artificial Intelligence</button>
+                        <button onClick={() => onCategoryClick("sd")} className={`${sd && (dark ? "bg-gradient-to-br from-white/20 to-transparent border-[1px] border-white/10" : "bg-gradient-to-br from-white to-transparent shadow-lg")} rounded-2xl   p-4`}>Software Development</button>
+                        <button onClick={() => onCategoryClick("iot")} className={`${iot && (dark ? "bg-gradient-to-br from-white/20 to-transparent border-[1px] border-white/10" : "bg-gradient-to-br from-white to-transparent shadow-lg")} rounded-2xl   p-4`}>Internet of Things</button>
+                        <button onClick={() => onCategoryClick("other")} className={`${other && (dark ? "bg-gradient-to-br from-white/20 to-transparent border-[1px] border-white/10" : "bg-gradient-to-br from-white to-transparent shadow-lg")} rounded-2xl   p-4`}>Other</button>
                     </div>
                 </div>
                 <div className='flex flex-wrap gap-5 mt-10 justify-center   '>
