@@ -446,7 +446,7 @@ const Home = () => {
                                 <SubText>Bangkit Academy led by Google, Tokopedia, Gojek, & Traveloka</SubText>
                             </div>
                             <div className={`h  rounded-3xl p-3`}>
-                                <img style={{ height: '50px', width: 'auto' }} src={!dark ? "bangkit2.png" : "bangkit2.png"} alt="" />
+                                <img style={{ height: '50px', width: '50px' }} src={!dark ? "bangkit2.png" : "bangkit2.png"} alt="" />
                             </div>
                         </div>
                         <div className='flex flex-row justify-between items-end'>
@@ -456,7 +456,7 @@ const Home = () => {
                                 <SubText>Petrokimia Gresik</SubText>
                             </div>
                             <div className={` w-fit h-fit rounded-3xl p-3`}>
-                                <img className='' style={{ height: '50px', width: 'auto',  }}  src={!dark ? "petro.png" : "petro.png"} alt="" />
+                                <img className='' style={{ height: '50px', width: '50px',  }}  src={!dark ? "petro.png" : "petro.png"} alt="" />
                             </div>
                         </div>
                         <div className='flex flex-row justify-between items-end'>
@@ -467,7 +467,7 @@ const Home = () => {
                             </div>
                             <div className={`h  rounded-3xl p-3`}>
                                 <img 
-                                style={{ height: '50px', width: 'auto' }}
+                                style={{ height: '50px', width: '50px' }}
                                  src={!dark ? "aeli.png" : "aeli-putih.png"} alt="" />
                             </div>
                         </div>
