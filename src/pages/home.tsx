@@ -442,10 +442,10 @@ const Home = () => {
             <section className='flex flex-col justify-center items-center px-5'>
                 <div className={`${!dark ? "bg-indigo-50 border-white text-black" : "bg-neutral-900 border-white/10 text-white"} border-[1px] rounded-3xl w-full sm:w-fit`}>
                     <div className='p-4   rounded-3xl gap-5 flex w-full justify-between sm:hidden'>
-                        <button onClick={() => onCategoryClick("ai")} className={`${ai && (dark ? "bg-gradient-to-br from-white/20 to-transparent border-[1px] border-white/10" : "bg-gradient-to-br from-white to-transparent shadow-lg")} rounded-2xl px-10  p-4`}>AI</button>
+                        <button onClick={() => onCategoryClick("ai")} className={`${ai && (dark ? "bg-gradient-to-br from-white/20 to-transparent border-[1px] border-white/10" : "bg-gradient-to-br from-white to-transparent shadow-lg")} rounded-2xl px-7  p-4`}>AI</button>
                         <button onClick={() => onCategoryClick("sd")} className={`${sd && (dark ? "bg-gradient-to-br from-white/20 to-transparent border-[1px] border-white/10" : "bg-gradient-to-br from-white to-transparent shadow-lg")} rounded-2xl   p-4`}>Software</button>
-                        <button onClick={() => onCategoryClick("iot")} className={`${iot && (dark ? "bg-gradient-to-br from-white/20 to-transparent border-[1px] border-white/10" : "bg-gradient-to-br from-white to-transparent shadow-lg")} rounded-2xl   p-4 px-10`}>IoT</button>
-                        <button onClick={() => onCategoryClick("other")} className={`${other && (dark ? "bg-gradient-to-br from-white/20 to-transparent border-[1px] border-white/10" : "bg-gradient-to-br from-white to-transparent shadow-lg")} rounded-2xl  px-7 p-4`}>Other</button>
+                        <button onClick={() => onCategoryClick("iot")} className={`${iot && (dark ? "bg-gradient-to-br from-white/20 to-transparent border-[1px] border-white/10" : "bg-gradient-to-br from-white to-transparent shadow-lg")} rounded-2xl   p-4 px-7`}>IoT</button>
+                        <button onClick={() => onCategoryClick("other")} className={`${other && (dark ? "bg-gradient-to-br from-white/20 to-transparent border-[1px] border-white/10" : "bg-gradient-to-br from-white to-transparent shadow-lg")} rounded-2xl  px-5 p-4`}>Other</button>
                     </div>
 
                     <div className='p-4  lg:w-fit sm:w-fit  rounded-3xl gap-5 sm:flex   w-full justify-between hidden'>

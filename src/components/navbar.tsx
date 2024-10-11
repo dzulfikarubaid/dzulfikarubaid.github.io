@@ -9,7 +9,7 @@ const Navbar = () => {
   })
   // })
   return (
-    <div className="fixed top-0 flex justify-center items-center w-full p-6 z-[99999]">
+    <div className="fixed lg:top-0 bottom-0 h-screen flex justify-center items-center w-full p-6 z-[99999]">
       <motion.div
         className={`flex flex-row gap-6 justify-between py-3 ${mode == 'dark' ? 'bg-neutral-900 text-white border-white/10' : 'bg-white text-black border-indigo-50'}  rounded-3xl items-center border-[1px] shadow-md `}
         style={{
