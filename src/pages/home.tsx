@@ -445,9 +445,7 @@ const Home = () => {
                                 <h1 className='text-2xl'>Machine Learning Cohort</h1>
                                 <SubText>Bangkit Academy led by Google, Tokopedia, Gojek, & Traveloka</SubText>
                             </div>
-                            <div className={`h  rounded-3xl`}>
-                                <img style={{ height: '50px', width: '50px' }} src={!dark ? "bangkit2.png" : "bangkit2.png"} alt="" />
-                            </div>
+                           
                         </div>
                         <div className='flex flex-row justify-between items-end'>
                             <div className='flex flex-col gap-2 mt-5 w-fit'>
@@ -455,9 +453,7 @@ const Home = () => {
                                 <h1 className='text-2xl'>Student Intern</h1>
                                 <SubText>Petrokimia Gresik</SubText>
                             </div>
-                            <div className={` w-fit h-fit rounded-3xl p-3`}>
-                                <img className='' style={{ height: '50px', width: '50px',  }}  src={!dark ? "petro.png" : "petro.png"} alt="" />
-                            </div>
+                           
                         </div>
                         <div className='flex flex-row justify-between items-end'>
                             <div className='flex flex-col gap-2 mt-5 w-fit '>
@@ -465,11 +461,7 @@ const Home = () => {
                                 <h1 className='text-2xl'>Full Stack Developer Intern</h1>
                                 <SubText>Indonesian Experiental Learning Association</SubText>
                             </div>
-                            <div className={`h  rounded-3xl`}>
-                                <img 
-                                style={{ height: '50px', width: '50px' }}
-                                 src={!dark ? "aeli.png" : "aeli-putih.png"} alt="" />
-                            </div>
+                            
                         </div>
                         
                     </Card>
