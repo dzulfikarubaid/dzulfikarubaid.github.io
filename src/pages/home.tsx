@@ -440,17 +440,17 @@ const Home = () => {
                             <h1 className='text-2xl'>EXPERIENCE</h1>
                         </div>
                         <div className='flex flex-row justify-between items-end'>
-                            <div className='flex flex-col gap-2 mt-5 '>
+                            <div className='flex flex-col gap-2 mt-5 w-fit'>
                                 <SmallText>Sep 2024 - Present</SmallText>
                                 <h1 className='text-2xl'>Machine Learning Cohort</h1>
                                 <SubText>Bangkit Academy led by Google, Tokopedia, Gojek, & Traveloka</SubText>
                             </div>
-                            <div className={`h  rounded-3xl p-3`}>
+                            <div className={`h  rounded-3xl`}>
                                 <img style={{ height: '50px', width: '50px' }} src={!dark ? "bangkit2.png" : "bangkit2.png"} alt="" />
                             </div>
                         </div>
                         <div className='flex flex-row justify-between items-end'>
-                            <div className='flex flex-col gap-2 mt-5 '>
+                            <div className='flex flex-col gap-2 mt-5 w-fit'>
                                 <SmallText>Jul 2024 - Aug 2024</SmallText>
                                 <h1 className='text-2xl'>Student Intern</h1>
                                 <SubText>Petrokimia Gresik</SubText>
@@ -460,12 +460,12 @@ const Home = () => {
                             </div>
                         </div>
                         <div className='flex flex-row justify-between items-end'>
-                            <div className='flex flex-col gap-2 mt-5 '>
+                            <div className='flex flex-col gap-2 mt-5 w-fit '>
                                 <SmallText>Aug 2023 - Nov 2023</SmallText>
                                 <h1 className='text-2xl'>Full Stack Developer Intern</h1>
                                 <SubText>Indonesian Experiental Learning Association</SubText>
                             </div>
-                            <div className={`h  rounded-3xl p-3`}>
+                            <div className={`h  rounded-3xl`}>
                                 <img 
                                 style={{ height: '50px', width: '50px' }}
                                  src={!dark ? "aeli.png" : "aeli-putih.png"} alt="" />
