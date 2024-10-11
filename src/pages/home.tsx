@@ -13,7 +13,7 @@ import { IoLogoFirebase } from 'react-icons/io5';
 import { MdOutlineArrowOutward } from 'react-icons/md';
 import { setMode } from '../redux/redux';
 import store from '../redux/redux';
-import { FaDownload, FaEye, FaRegEye } from 'react-icons/fa6';
+import { FaDownload, FaEye, FaRegEye, FaRegHandBackFist } from 'react-icons/fa6';
 import { LuHardDriveDownload } from 'react-icons/lu';
 import { motion } from 'framer-motion';
 import { HiSelector } from 'react-icons/hi';
@@ -372,7 +372,7 @@ const Home = () => {
                                 {
                                     afterMessage ?
                                     <div className='flex flex-col p-5'>
-                                    <h1>Thank you for your message, {name}!</h1>
+                                    <h1>Thank you for your message <FaRegHandBackFist /></h1>
                                     </div>
                                     :
                                     <div className='flex flex-col p-5 gap-4'>
