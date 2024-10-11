@@ -19,8 +19,8 @@ import { motion } from 'framer-motion';
 import { HiSelector } from 'react-icons/hi';
 const Home = () => {
     const [ai, setAi] = React.useState(false)
-    const [iot, setIot] = React.useState(true)
-    const [sd, setSd] = React.useState(false)
+    const [iot, setIot] = React.useState(false)
+    const [sd, setSd] = React.useState(true)
     const [other, setOther] = React.useState(false)
     const [dark, setDark] = React.useState(false)
     const [openMessage, setOpenMessage] = React.useState(false)
