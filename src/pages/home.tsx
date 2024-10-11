@@ -319,7 +319,7 @@ const Home = () => {
             </section>
             <section className='flex gap-5 lg:flex-row flex-col px-5  lg:w-fit w-full'>
                 <div className='flex lg:flex-col flex-row lg:w-fit w-full gap-5 text-4xl'>
-                    <a target="_blank" href="https://www.linkedin.com/in/ahmad-dzulfikar-ubaidillah/" className='w-full'><Card className="flex justify-center items-center lg:p-5 px-3 py-4 rounded-2xl"><BiLogoLinkedin></BiLogoLinkedin></Card></a>
+                    <a target="_blank" href="https://www.linkedin.com/in/dzulfikarubaid/" className='w-full'><Card className="flex justify-center items-center lg:p-5 px-3 py-4 rounded-2xl"><BiLogoLinkedin></BiLogoLinkedin></Card></a>
                     <a target="_blank" href="https://github.com/dzulfikarubaid" className='w-full'>
                         <Card className="flex justify-center items-center lg:p-5  px-3 py-4 rounded-2xl"><BiLogoGithub></BiLogoGithub></Card>
                     </a>
