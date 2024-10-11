@@ -18,8 +18,8 @@ import { LuHardDriveDownload } from 'react-icons/lu';
 import { motion } from 'framer-motion';
 import { HiSelector } from 'react-icons/hi';
 const Home = () => {
-    const [ai, setAi] = React.useState(true)
-    const [iot, setIot] = React.useState(false)
+    const [ai, setAi] = React.useState(false)
+    const [iot, setIot] = React.useState(true)
     const [sd, setSd] = React.useState(false)
     const [other, setOther] = React.useState(false)
     const [dark, setDark] = React.useState(false)
@@ -147,7 +147,7 @@ const Home = () => {
             <div className={`rounded-3xl border-white border-[1px] p-5 bg-gradient-to-br ${!dark ? "from-indigo-50 to-neutral-50 border-white text-black" : "from-neutral-900 to-neutral-800 border-white/10 text-white "}  lg:w-[500px] w-full ${className}`}>
                 {imageSrc != "" ?
                     <img src={`projects/${imageSrc}`} alt={title} className="rounded-xl mb-3 lg:h-[250px]  w-full" /> :
-                    <img src={`${!dark ? "projects/white.png": "projects/black2.png"}`} alt={title} className="rounded-xl mb-3 lg:h-[250px] w-full" />
+                    <img src={`${!dark ? "projects/white.png" : "projects/black2.png"}`} alt={title} className="rounded-xl mb-3 lg:h-[250px] w-full" />
                 }
                 <div className='flex flex-row justify-between items-end'>
                     <div>
@@ -371,47 +371,47 @@ const Home = () => {
                                 </div>
                                 {
                                     afterMessage ?
-                                    <div className='flex flex-col p-5'>
-                                    <h1>Thank you for your message <span><FaRegHandBackFist /></span></h1>
-                                    </div>
-                                    :
-                                    <div className='flex flex-col p-5 gap-4'>
-                                        <div className='flex flex-row border-white/10 border-[1px] rounded-2xl items-center w-full p-3 '>
-                                            <select style={{
-                                                // "WebkitAppearance": "none",
-                                                "appearance": "none",
-                                                "MozAppearance": "none",
-                                            }} className='bg-transparent w-full focus:outline-none' onChange={(e) => setType(e.target.value)} id="type">
-                                                <option value="anon" className='flex justify-between items-center'>
-                                                    <h1>Anonymous</h1>
-
-                                                </option>
-                                                <option value="name">Name</option>
-
-                                            </select>
-                                            <HiSelector size={20} color='white'></HiSelector>
+                                        <div className='flex flex-col p-5'>
+                                            <h1>Thank you for your message <span><FaRegHandBackFist /></span></h1>
                                         </div>
-                                        {type == "name" &&
-                                            <input type="text" className="bg-transparent focus:outline-none w-full resize-none border-[1px] border-white/10 p-3 rounded-xl" name="name" placeholder='Your Name' id="" onChange={(e) => setName(e.target.value)} />
-                                        }
-                                        <textarea
-                                            onChange={(e) => setMessage(e.target.value)}
-                                            className="bg-transparent focus:outline-none w-full resize-none border-[1px] border-white/10 p-3 rounded-2xl h-[200px]" name="message"
-                                            placeholder='Write your message' id=""></textarea>
-                                        <div className='flex justify-end mt-5'>
-                                            <button onClick={() => {
-                                                addDoc(collection(db, "messages"), {
-                                                    name: name,
-                                                    message: message
-                                                })
-                                                    .then(() => {
+                                        :
+                                        <div className='flex flex-col p-5 gap-4'>
+                                            <div className='flex flex-row border-white/10 border-[1px] rounded-2xl items-center w-full p-3 '>
+                                                <select style={{
+                                                    // "WebkitAppearance": "none",
+                                                    "appearance": "none",
+                                                    "MozAppearance": "none",
+                                                }} className='bg-transparent w-full focus:outline-none' onChange={(e) => setType(e.target.value)} id="type">
+                                                    <option value="anon" className='flex justify-between items-center'>
+                                                        <h1>Anonymous</h1>
 
-                                                        setAfterMessage(true);
-                                                        setType("");
+                                                    </option>
+                                                    <option value="name">Name</option>
+
+                                                </select>
+                                                <HiSelector size={20} color='white'></HiSelector>
+                                            </div>
+                                            {type == "name" &&
+                                                <input type="text" className="bg-transparent focus:outline-none w-full resize-none border-[1px] border-white/10 p-3 rounded-xl" name="name" placeholder='Your Name' id="" onChange={(e) => setName(e.target.value)} />
+                                            }
+                                            <textarea
+                                                onChange={(e) => setMessage(e.target.value)}
+                                                className="bg-transparent focus:outline-none w-full resize-none border-[1px] border-white/10 p-3 rounded-2xl h-[200px]" name="message"
+                                                placeholder='Write your message' id=""></textarea>
+                                            <div className='flex justify-end mt-5'>
+                                                <button onClick={() => {
+                                                    addDoc(collection(db, "messages"), {
+                                                        name: name,
+                                                        message: message
                                                     })
-                                            }}><BiSend size={25}></BiSend></button>
+                                                        .then(() => {
+
+                                                            setAfterMessage(true);
+                                                            setType("");
+                                                        })
+                                                }}><BiSend size={25}></BiSend></button>
+                                            </div>
                                         </div>
-                                    </div>
                                 }
                             </motion.div>
                         </div>
@@ -445,7 +445,7 @@ const Home = () => {
                                 <h1 className='text-2xl'>Machine Learning Cohort</h1>
                                 <SubText>Bangkit Academy led by Google, Tokopedia, Gojek, & Traveloka</SubText>
                             </div>
-                           
+
                         </div>
                         <div className='flex flex-row justify-between items-end'>
                             <div className='flex flex-col gap-2 mt-5 w-fit'>
@@ -453,7 +453,7 @@ const Home = () => {
                                 <h1 className='text-2xl'>Student Intern</h1>
                                 <SubText>Petrokimia Gresik</SubText>
                             </div>
-                           
+
                         </div>
                         <div className='flex flex-row justify-between items-end'>
                             <div className='flex flex-col gap-2 mt-5 w-fit '>
@@ -461,9 +461,9 @@ const Home = () => {
                                 <h1 className='text-2xl'>Full Stack Developer Intern</h1>
                                 <SubText>Indonesian Experiental Learning Association</SubText>
                             </div>
-                            
+
                         </div>
-                        
+
                     </Card>
                 </div>
 
@@ -471,15 +471,17 @@ const Home = () => {
             <section className='flex flex-col justify-center items-center px-5'>
                 <div className={`${!dark ? "bg-indigo-50 border-white text-black" : "bg-neutral-900 border-white/10 text-white"} border-[1px] rounded-3xl w-full sm:w-fit`}>
                     <div className='p-2   rounded-3xl gap-2 flex w-full justify-between sm:hidden'>
-                        <button onClick={() => onCategoryClick("ai")} className={`${ai && (dark ? "bg-gradient-to-br from-white/20 to-transparent border-[1px] border-white/10 px-6" : "bg-gradient-to-br from-white to-transparent shadow-lg px-6")} rounded-2xl   p-4 `}>AI</button>
                         <button onClick={() => onCategoryClick("sd")} className={`${sd && (dark ? "bg-gradient-to-br from-white/20 to-transparent border-[1px] border-white/10" : "bg-gradient-to-br from-white to-transparent shadow-lg")} rounded-2xl   p-4`}>Software</button>
+                        <button onClick={() => onCategoryClick("ai")} className={`${ai && (dark ? "bg-gradient-to-br from-white/20 to-transparent border-[1px] border-white/10 px-6" : "bg-gradient-to-br from-white to-transparent shadow-lg px-6")} rounded-2xl   p-4 `}>AI</button>
+
                         <button onClick={() => onCategoryClick("iot")} className={`${iot && (dark ? "bg-gradient-to-br from-white/20 to-transparent border-[1px] border-white/10 px-6" : "bg-gradient-to-br from-white to-transparent shadow-lg px-6")} rounded-2xl   p-4 `}>IoT</button>
                         <button onClick={() => onCategoryClick("other")} className={`${other && (dark ? "bg-gradient-to-br from-white/20 to-transparent border-[1px] border-white/10" : "bg-gradient-to-br from-white to-transparent shadow-lg")} rounded-2xl   p-4`}>Other</button>
                     </div>
 
                     <div className='p-4  lg:w-fit sm:w-fit  rounded-3xl gap-5 sm:flex   w-full justify-between hidden'>
-                        <button onClick={() => onCategoryClick("ai")} className={`${ai && (dark ? "bg-gradient-to-br from-white/20 to-transparent border-[1px] border-white/10" : "bg-gradient-to-br from-white to-transparent shadow-lg")} rounded-2xl   p-4`}>Artificial Intelligence</button>
                         <button onClick={() => onCategoryClick("sd")} className={`${sd && (dark ? "bg-gradient-to-br from-white/20 to-transparent border-[1px] border-white/10" : "bg-gradient-to-br from-white to-transparent shadow-lg")} rounded-2xl   p-4`}>Software Development</button>
+                        <button onClick={() => onCategoryClick("ai")} className={`${ai && (dark ? "bg-gradient-to-br from-white/20 to-transparent border-[1px] border-white/10" : "bg-gradient-to-br from-white to-transparent shadow-lg")} rounded-2xl   p-4`}>Artificial Intelligence</button>
+
                         <button onClick={() => onCategoryClick("iot")} className={`${iot && (dark ? "bg-gradient-to-br from-white/20 to-transparent border-[1px] border-white/10" : "bg-gradient-to-br from-white to-transparent shadow-lg")} rounded-2xl   p-4`}>Internet of Things</button>
                         <button onClick={() => onCategoryClick("other")} className={`${other && (dark ? "bg-gradient-to-br from-white/20 to-transparent border-[1px] border-white/10" : "bg-gradient-to-br from-white to-transparent shadow-lg")} rounded-2xl   p-4`}>Other</button>
                     </div>
