@@ -147,7 +147,7 @@ const Home = () => {
             <div className={`rounded-3xl border-white border-[1px] p-5 bg-gradient-to-br ${!dark ? "from-indigo-50 to-neutral-50 border-white text-black" : "from-neutral-900 to-neutral-800 border-white/10 text-white "}  lg:w-[500px] w-full ${className}`}>
                 {imageSrc != "" ?
                     <img src={`projects/${imageSrc}`} alt={title} className="rounded-xl mb-3 lg:h-[250px]  w-full" /> :
-                    <img src={`projects/project.png`} alt={title} className="rounded-xl mb-3 lg:h-[250px] w-full" />
+                    <img src={`${!dark ? "projects/white.png": "projects/black.png"}`} alt={title} className="rounded-xl mb-3 lg:h-[250px] w-full" />
                 }
                 <div className='flex flex-row justify-between items-end'>
                     <div>
