@@ -154,7 +154,7 @@ const Home = () => {
                         <SmallText>{description}</SmallText>
                         <h1 className="text-2xl">{title}</h1>
                     </div>
-                    <div className='flex gap-5 items-center'>
+                    <div className='flex gap-5 items-center pl-7'>
                         {github && <button className="text-2xl"><a href={github} target="_blank"><SiGithub></SiGithub></a></button>}
                         {website && <button className="text-2xl"><a href={website} target="_blank"><MdOutlineArrowOutward></MdOutlineArrowOutward></a></button>}
                     </div>
