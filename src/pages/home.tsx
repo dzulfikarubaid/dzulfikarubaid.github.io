@@ -2,7 +2,7 @@ import { div, title } from 'framer-motion/client'
 import React, { useEffect } from 'react'
 import { BiDownload, BiHeart, BiLinkExternal, BiLogoDjango, BiLogoGithub, BiLogoGmail, BiLogoInstagram, BiLogoInstagramAlt, BiLogoJavascript, BiLogoLinkedin, BiLogoPython, BiMailSend, BiMessage, BiMessageAdd, BiMoon, BiRightTopArrowCircle, BiSend, BiShow, BiSolidRightTopArrowCircle, BiSun, BiX } from 'react-icons/bi'
 import db from '../firebase/init';
-import { collection, addDoc } from "firebase/firestore"; 
+import { collection, addDoc } from "firebase/firestore";
 import { Swiper, SwiperSlide } from 'swiper/react';
 // Import Swiper styles
 import 'swiper/css';
@@ -24,6 +24,7 @@ const Home = () => {
     const [other, setOther] = React.useState(false)
     const [dark, setDark] = React.useState(false)
     const [openMessage, setOpenMessage] = React.useState(false)
+    const [afterMessage, setAfterMessage] = React.useState(false)
     const [type, setType] = React.useState("")
     const [name, setName] = React.useState("")
     const [message, setMessage] = React.useState("")
@@ -362,43 +363,56 @@ const Home = () => {
                                 transition={{ duration: 1 }} className={`${!dark ? "bg-indigo-50 border-black/10 " : "bg-neutral-900 border-white/10"} lg:h-fit lg:w-[600px] w-full rounded-2xl p-5 border-[1px]`}>
                                 <div className='flex justify-end'>
                                     <button
-                                        onClick={() => {setOpenMessage(false);
-                                        setType("");
-                                        
+                                        onClick={() => {
+                                            setOpenMessage(false);
+                                            setType("");
+
                                         }} className='text-3xl'><BiX></BiX></button>
                                 </div>
-                                <div className='flex flex-col p-5 gap-4'>
-                                    <div className='flex flex-row border-white/10 border-[1px] rounded-2xl items-center w-full p-3 '>
-                                        <select style={{
-                                            // "WebkitAppearance": "none",
-                                            "appearance": "none",
-                                            "MozAppearance": "none",
-                                        }} className='bg-transparent w-full focus:outline-none' onChange={(e) => setType(e.target.value)} id="type">
-                                            <option value="anon" className='flex justify-between items-center'>
-                                                <h1>Anonymous</h1>
-
-                                            </option>
-                                            <option value="name">Name</option>
-
-                                        </select>
-                                        <HiSelector size={20} color='white'></HiSelector>
+                                {
+                                    afterMessage ?
+                                    <div className='flex flex-col p-5'>
+                                    <h1>Thank you for your message, {name}!</h1>
                                     </div>
-                                    {type == "name" &&
-                                    <input type="text" className="bg-transparent focus:outline-none w-full resize-none border-[1px] border-white/10 p-3 rounded-xl" name="name" placeholder='Your Name' id="" onChange={(e)=>setName(e.target.value)}/>
-                                    }
-                                    <textarea 
-                                    onChange={(e)=>setMessage(e.target.value)}
-                                    className="bg-transparent focus:outline-none w-full resize-none border-[1px] border-white/10 p-3 rounded-2xl h-[200px]" name="message"
-                                    placeholder='Write your message' id=""></textarea>
-                                    <div className='flex justify-end mt-5'>
-                                        <button onClick={()=>{
-                                            addDoc(collection(db, "messages"), {
-                                                name: name,
-                                                message: message
-                                            })
-                                        }}><BiSend size={25}></BiSend></button>
+                                    :
+                                    <div className='flex flex-col p-5 gap-4'>
+                                        <div className='flex flex-row border-white/10 border-[1px] rounded-2xl items-center w-full p-3 '>
+                                            <select style={{
+                                                // "WebkitAppearance": "none",
+                                                "appearance": "none",
+                                                "MozAppearance": "none",
+                                            }} className='bg-transparent w-full focus:outline-none' onChange={(e) => setType(e.target.value)} id="type">
+                                                <option value="anon" className='flex justify-between items-center'>
+                                                    <h1>Anonymous</h1>
+
+                                                </option>
+                                                <option value="name">Name</option>
+
+                                            </select>
+                                            <HiSelector size={20} color='white'></HiSelector>
+                                        </div>
+                                        {type == "name" &&
+                                            <input type="text" className="bg-transparent focus:outline-none w-full resize-none border-[1px] border-white/10 p-3 rounded-xl" name="name" placeholder='Your Name' id="" onChange={(e) => setName(e.target.value)} />
+                                        }
+                                        <textarea
+                                            onChange={(e) => setMessage(e.target.value)}
+                                            className="bg-transparent focus:outline-none w-full resize-none border-[1px] border-white/10 p-3 rounded-2xl h-[200px]" name="message"
+                                            placeholder='Write your message' id=""></textarea>
+                                        <div className='flex justify-end mt-5'>
+                                            <button onClick={() => {
+                                                addDoc(collection(db, "messages"), {
+                                                    name: name,
+                                                    message: message
+                                                })
+                                                    .then(() => {
+
+                                                        setAfterMessage(true);
+                                                        setType("");
+                                                    })
+                                            }}><BiSend size={25}></BiSend></button>
+                                        </div>
                                     </div>
-                                </div>
+                                }
                             </motion.div>
                         </div>
                     }
@@ -444,7 +458,7 @@ const Home = () => {
                     <div className='p-2   rounded-3xl gap-2 flex w-full justify-between sm:hidden'>
                         <button onClick={() => onCategoryClick("ai")} className={`${ai && (dark ? "bg-gradient-to-br from-white/20 to-transparent border-[1px] border-white/10 px-6" : "bg-gradient-to-br from-white to-transparent shadow-lg px-6")} rounded-2xl   p-4 `}>AI</button>
                         <button onClick={() => onCategoryClick("sd")} className={`${sd && (dark ? "bg-gradient-to-br from-white/20 to-transparent border-[1px] border-white/10" : "bg-gradient-to-br from-white to-transparent shadow-lg")} rounded-2xl   p-4`}>Software</button>
-                        <button onClick={() => onCategoryClick("iot")} className={`${iot && (dark ? "bg-gradient-to-br from-white/20 to-transparent border-[1px] border-white/10 px-6" : "bg-gradient-to-br from-white to-transparent shadow-lg px-6") } rounded-2xl   p-4 `}>IoT</button>
+                        <button onClick={() => onCategoryClick("iot")} className={`${iot && (dark ? "bg-gradient-to-br from-white/20 to-transparent border-[1px] border-white/10 px-6" : "bg-gradient-to-br from-white to-transparent shadow-lg px-6")} rounded-2xl   p-4 `}>IoT</button>
                         <button onClick={() => onCategoryClick("other")} className={`${other && (dark ? "bg-gradient-to-br from-white/20 to-transparent border-[1px] border-white/10" : "bg-gradient-to-br from-white to-transparent shadow-lg")} rounded-2xl   p-4`}>Other</button>
                     </div>
 
