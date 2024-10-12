@@ -23,13 +23,6 @@ export default function TextBig() {
             transition={{ duration: 1 }} // Durasi transisi hilang
             className="absolute"
           >
-            {/* <FancyText
-              gradient={{ from: '#818CF8', to: '#5B21B6', type: 'radial' }}
-              animateTo={{ from: '#F858E0', to: '#77156C' }}
-              animateDuration={2000}
-            >
-              
-            </FancyText> */}
             <h1 className="text-center text-[60px] sm:text-[120px] font-bold ">Hello World!</h1>
           </motion.div>
         )}
