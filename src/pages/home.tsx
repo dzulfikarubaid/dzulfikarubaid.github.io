@@ -1,4 +1,4 @@
-import { div, title } from 'framer-motion/client'
+import { desc, div, title } from 'framer-motion/client'
 import React, { useEffect } from 'react'
 import { BiDownload, BiHeart, BiLinkExternal, BiLogoDjango, BiLogoGithub, BiLogoGmail, BiLogoInstagram, BiLogoInstagramAlt, BiLogoJavascript, BiLogoLinkedin, BiLogoPython, BiMailSend, BiMessage, BiMessageAdd, BiMoon, BiRightTopArrowCircle, BiSend, BiShow, BiSolidRightTopArrowCircle, BiSun, BiX } from 'react-icons/bi'
 import db from '../firebase/init';
@@ -188,6 +188,14 @@ const Home = () => {
             category: ["SD"],
             github: "https://github.com/dzulfikarubaid/aeli_oke"
 
+        },
+        {
+            title:"NITIPIN MOBILE APP",
+            description:"PROJECT AT COMPETITION",
+            website:"https://www.youtube.com/watch?v=22gIh-AFUio",
+            category:["SD"],
+            github:"https://github.com/dzulfikarubaid/nitipin",
+            imageSrc:"nitipin.png"
         },
         {
             title: "BABY MEASUREMENT USING IMAGE PROCESSING",
