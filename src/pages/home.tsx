@@ -1,5 +1,5 @@
 import { desc, div, title } from 'framer-motion/client'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { BiDownload, BiHeart, BiLinkExternal, BiLogoDjango, BiLogoGithub, BiLogoGmail, BiLogoInstagram, BiLogoInstagramAlt, BiLogoJavascript, BiLogoLinkedin, BiLogoPython, BiMailSend, BiMessage, BiMessageAdd, BiMoon, BiRightTopArrowCircle, BiSend, BiShow, BiSolidRightTopArrowCircle, BiSun, BiX } from 'react-icons/bi'
 import db from '../firebase/init';
 import { collection, addDoc } from "firebase/firestore";
@@ -11,35 +11,29 @@ import { Autoplay } from 'swiper/modules';
 import { SiAstro, SiDjango, SiElectron, SiFlask, SiFlutter, SiFramer, SiGithub, SiKotlin, SiNextdotjs, SiPytorch, SiReact, SiSwift, SiTailwindcss, SiTauri, SiTensorflow, SiVercel } from 'react-icons/si';
 import { IoLogoFirebase } from 'react-icons/io5';
 import { MdOutlineArrowOutward } from 'react-icons/md';
-import { setMode } from '../redux/redux';
-import store from '../redux/redux';
+import store, {setMode} from '../redux/redux';
 import { FaDownload, FaEye, FaRegEye, FaRegHandBackFist } from 'react-icons/fa6';
 import { LuHardDriveDownload } from 'react-icons/lu';
 import { motion } from 'framer-motion';
 import { HiSelector } from 'react-icons/hi';
 const Home = () => {
-    const [ai, setAi] = React.useState(false)
-    const [iot, setIot] = React.useState(false)
-    const [sd, setSd] = React.useState(true)
-    const [other, setOther] = React.useState(false)
-    const [dark, setDark] = React.useState(false)
-    const [openMessage, setOpenMessage] = React.useState(false)
-    const [afterMessage, setAfterMessage] = React.useState(false)
-    const [type, setType] = React.useState("")
-    const [name, setName] = React.useState("")
-    const [message, setMessage] = React.useState("")
-    useEffect(() => {
-        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-            setDark(true)
-            console.log("dark")
-            store.dispatch(setMode("dark"))
-        }
-        else {
-            setDark(false)
-            console.log("light")
-            store.dispatch(setMode("light"))
-        }
-    }, [])
+    const [ai, setAi] = useState(false)
+    const [iot, setIot] = useState(false)
+    const [sd, setSd] = useState(true)
+    const [other, setOther] = useState(false)
+    const [dark, setDark] = useState(false)
+    const [openMessage, setOpenMessage] = useState(false)
+    const [afterMessage, setAfterMessage] = useState(false)
+    const [type, setType] = useState("")
+    const [name, setName] = useState("")
+    const [message, setMessage] = useState("")
+
+    const [currentMode, setCurrentMode] = useState(store.getState().mode)
+    // useEffect(() => {
+    store.subscribe(() => {
+        setCurrentMode(store.getState().mode)
+    })
+
     function onSun() {
         setDark(false)
         store.dispatch(setMode("light"))
@@ -77,7 +71,7 @@ const Home = () => {
     function Card(props: any) {
         const { children, className } = props
         return (
-            <div className={`rounded-3xl  border-[1px] p-5 bg-gradient-to-br  ${!dark ? "from-indigo-50 to-neutral-50 border-white text-black" : "from-neutral-900 to-neutral-800 border-white/10 text-white "} lg:w-fit w-full shadow-md ${className}`}>
+            <div className={`rounded-3xl  border-[1px] p-5 bg-gradient-to-br  ${currentMode=="light" ? "from-indigo-50 to-neutral-50 border-white text-black" : "from-neutral-900 to-neutral-800 border-white/10 text-white "} lg:w-fit w-full shadow-md ${className}`}>
                 {children}
             </div>
         )
@@ -86,7 +80,7 @@ const Home = () => {
     function SubText(props: any) {
         const { children } = props
         return (
-            <p className={`${!dark ? "text-neutral-500" : "text-neutral-400"}`}>
+            <p className={`${currentMode == "light" ? "text-neutral-500" : "text-neutral-400"}`}>
                 {children}
             </p>
         )
@@ -106,7 +100,7 @@ const Home = () => {
         return <iframe className='rounded-xl lg:h-full h-[250px] lg:w-fit w-full grayscale hover:grayscale-0' src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126646.20750916582!2d112.71268375!3d-7.275619450000001!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd7fbf8381ac47f%3A0x3027a76e352be40!2sSurabaya%2C%20East%20Java!5e0!3m2!1sen!2sid!4v1727779537312!5m2!1sen!2sid" style={{ border: 0 }} allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade"></iframe>
     }
     function Icon({ children }: any) {
-        return <div className={`p-2 ${!dark ? "bg-white border-[1px] border-black/10" : "bg-white/50 border-[1px] border-white/10"} rounded-xl w-fit`}>
+        return <div className={`p-2 ${currentMode == "light" ? "bg-white border-[1px] border-black/10" : "bg-white/50 border-[1px] border-white/10"} rounded-xl w-fit`}>
             {children}
         </div>
     }
@@ -144,10 +138,10 @@ const Home = () => {
     }
     function ProjectCard({ title, description, imageSrc, footer, className, github, website }: any) {
         return (
-            <div className={`rounded-3xl border-white border-[1px] p-5 bg-gradient-to-br ${!dark ? "from-indigo-50 to-neutral-50 border-white text-black" : "from-neutral-900 to-neutral-800 border-white/10 text-white "}  lg:w-[500px] w-full ${className}`}>
+            <div className={`rounded-3xl border-white border-[1px] p-5 bg-gradient-to-br ${currentMode == "light" ? "from-indigo-50 to-neutral-50 border-white text-black" : "from-neutral-900 to-neutral-800 border-white/10 text-white "}  lg:w-[500px] w-full ${className}`}>
                 {imageSrc != "" ?
                     <img src={`projects/${imageSrc}`} alt={title} className="rounded-xl mb-3 lg:h-[250px]  w-full" /> :
-                    <img src={`${!dark ? "projects/white.png" : "projects/black2.png"}`} alt={title} className="rounded-xl mb-3 lg:h-[250px] w-full" />
+                    <img src={`${currentMode == "light" ? "projects/white.png" : "projects/black2.png"}`} alt={title} className="rounded-xl mb-3 lg:h-[250px] w-full" />
                 }
                 <div className='flex flex-row justify-between items-end'>
                     <div>
@@ -190,12 +184,12 @@ const Home = () => {
 
         },
         {
-            title:"NITIPIN MOBILE APP",
-            description:"PROJECT AT COMPETITION",
-            website:"https://www.youtube.com/watch?v=22gIh-AFUio",
-            category:["SD"],
-            github:"https://github.com/dzulfikarubaid/nitipin",
-            imageSrc:"nitipin.png"
+            title: "NITIPIN MOBILE APP",
+            description: "PROJECT AT COMPETITION",
+            website: "https://www.youtube.com/watch?v=22gIh-AFUio",
+            category: ["SD"],
+            github: "https://github.com/dzulfikarubaid/nitipin",
+            imageSrc: "nitipin.png"
         },
         {
             title: "BABY MEASUREMENT USING IMAGE PROCESSING",
@@ -307,7 +301,7 @@ const Home = () => {
                 <div className='flex flex-col gap-5'>
                     <Card className='!w-full'>
                         <div className='flex justify-center items-center text-4xl gap-4'>
-                            <button onClick={onSun} className={` ${!dark && "bg-gradient-to-br from-white to-transparent  shadow-md !text-orange-400"} p-5 rounded-2xl w-full flex items-center justify-center text-neutral-500 `}><BiSun></BiSun></button>
+                            <button onClick={onSun} className={` ${currentMode == "light" && "bg-gradient-to-br from-white to-transparent  shadow-md !text-orange-400"} p-5 rounded-2xl w-full flex items-center justify-center text-neutral-500 `}><BiSun></BiSun></button>
                             <button onClick={onMoon} className={` ${dark && "bg-gradient-to-br from-white/20 to-transparent  shadow-md !text-indigo-200"} p-5 rounded-2xl w-full flex items-center justify-center text-neutral-500`}><BiMoon></BiMoon></button>
                         </div>
                     </Card>
@@ -344,13 +338,13 @@ const Home = () => {
 
                 </div>
                 <div className='flex flex-col gap-5'>
-                    <div className={`rounded-3xl border-[1px]  ${!dark ? "bg-indigo-50 border-white text-black" : "bg-neutral-900 border-white/10 text-white "} p-5 w-full`}>
+                    <div className={`rounded-3xl border-[1px]  ${currentMode == "light" ? "bg-indigo-50 border-white text-black" : "bg-neutral-900 border-white/10 text-white "} p-5 w-full`}>
                         <div className='lg:w-[400px] w-full  text-5xl flex justify-center items-center py-[60px] relative text-black'>
                             <Slider></Slider>
-                            <div className={`absolute -translate-y-1/2 top-1/2 inset-y-0 -left-4 w-16 h-24 bg-gradient-to-r ${!dark ? "from-indigo-50 via-indigo-50" : "from-neutral-900 via-neutral-900"}  to-transparent blur-sm pointer-events-none z-20 rounded-2xl`}></div>
+                            <div className={`absolute -translate-y-1/2 top-1/2 inset-y-0 -left-4 w-16 h-24 bg-gradient-to-r ${currentMode == "light" ? "from-indigo-50 via-indigo-50" : "from-neutral-900 via-neutral-900"}  to-transparent blur-sm pointer-events-none z-20 rounded-2xl`}></div>
 
                             {/* Right Blur */}
-                            <div className={`absolute top-1/2 -translate-y-1/2 inset-y-0 -right-4 w-16 bg-gradient-to-l ${!dark ? "from-indigo-50 via-indigo-50" : "from-neutral-900 via-neutral-900"} h-24 to-transparent blur-sm pointer-events-none z-20 rounded-2xl`}></div>
+                            <div className={`absolute top-1/2 -translate-y-1/2 inset-y-0 -right-4 w-16 bg-gradient-to-l ${currentMode == "light" ? "from-indigo-50 via-indigo-50" : "from-neutral-900 via-neutral-900"} h-24 to-transparent blur-sm pointer-events-none z-20 rounded-2xl`}></div>
                         </div>
                         <div className=''>
                             <SmallText>TECH STACK</SmallText>
@@ -368,7 +362,7 @@ const Home = () => {
                         <div className={`fixed inset-0 flex items-center  z-[9999] justify-center mx-5`}>
                             <motion.div initial={{ y: 400 }}
                                 animate={{ y: 0 }}
-                                transition={{ duration: 1 }} className={`${!dark ? "bg-indigo-50 border-black/10 " : "bg-neutral-900 border-white/10"} lg:h-fit lg:w-[600px] w-full rounded-2xl p-5 border-[1px]`}>
+                                transition={{ duration: 1 }} className={`${currentMode == "light" ? "bg-indigo-50 border-black/10 " : "bg-neutral-900 border-white/10"} lg:h-fit lg:w-[600px] w-full rounded-2xl p-5 border-[1px]`}>
                                 <div className='flex justify-end'>
                                     <button
                                         onClick={() => {
@@ -438,7 +432,7 @@ const Home = () => {
                                 <SubText>Institut Teknologi Sepuluh Nopember</SubText>
                             </div>
                             <div id='work' className='w-[150px] '>
-                                <img src={!dark ? "its.png" : "its-putih.png"} alt="" />
+                                <img src={currentMode == "light" ? "its.png" : "its-putih.png"} alt="" />
                             </div>
                         </div>
                     </Card>
@@ -477,21 +471,21 @@ const Home = () => {
 
             </section>
             <section className='flex flex-col justify-center items-center px-5'>
-                <div className={`${!dark ? "bg-indigo-50 border-white text-black" : "bg-neutral-900 border-white/10 text-white"} border-[1px] rounded-3xl w-full sm:w-fit`}>
+                <div className={`${currentMode == "light" ? "bg-indigo-50 border-white text-black" : "bg-neutral-900 border-white/10 text-white"} border-[1px] rounded-3xl w-full sm:w-fit`}>
                     <div className='p-2   rounded-3xl gap-2 flex w-full justify-between sm:hidden'>
-                        <button onClick={() => onCategoryClick("sd")} className={`${sd && (dark ? "bg-gradient-to-br from-white/20 to-transparent border-[1px] border-white/10" : "bg-gradient-to-br from-white to-transparent shadow-lg")} rounded-2xl   p-4`}>Software</button>
-                        <button onClick={() => onCategoryClick("ai")} className={`${ai && (dark ? "bg-gradient-to-br from-white/20 to-transparent border-[1px] border-white/10 px-6" : "bg-gradient-to-br from-white to-transparent shadow-lg px-6")} rounded-2xl   p-4 `}>AI</button>
+                        <button onClick={() => onCategoryClick("sd")} className={`${sd && (currentMode == "dark" ? "bg-gradient-to-br from-white/20 to-transparent border-[1px] border-white/10" : "bg-gradient-to-br from-white to-transparent shadow-lg")} rounded-2xl   p-4`}>Software</button>
+                        <button onClick={() => onCategoryClick("ai")} className={`${ai && (currentMode == "dark" ? "bg-gradient-to-br from-white/20 to-transparent border-[1px] border-white/10 px-6" : "bg-gradient-to-br from-white to-transparent shadow-lg px-6")} rounded-2xl   p-4 `}>AI</button>
 
-                        <button onClick={() => onCategoryClick("iot")} className={`${iot && (dark ? "bg-gradient-to-br from-white/20 to-transparent border-[1px] border-white/10 px-6" : "bg-gradient-to-br from-white to-transparent shadow-lg px-6")} rounded-2xl   p-4 `}>IoT</button>
-                        <button onClick={() => onCategoryClick("other")} className={`${other && (dark ? "bg-gradient-to-br from-white/20 to-transparent border-[1px] border-white/10" : "bg-gradient-to-br from-white to-transparent shadow-lg")} rounded-2xl   p-4`}>Other</button>
+                        <button onClick={() => onCategoryClick("iot")} className={`${iot && (currentMode == "dark" ? "bg-gradient-to-br from-white/20 to-transparent border-[1px] border-white/10 px-6" : "bg-gradient-to-br from-white to-transparent shadow-lg px-6")} rounded-2xl   p-4 `}>IoT</button>
+                        <button onClick={() => onCategoryClick("other")} className={`${other && (currentMode == "dark" ? "bg-gradient-to-br from-white/20 to-transparent border-[1px] border-white/10" : "bg-gradient-to-br from-white to-transparent shadow-lg")} rounded-2xl   p-4`}>Other</button>
                     </div>
 
                     <div className='p-4  lg:w-fit sm:w-fit  rounded-3xl gap-5 sm:flex   w-full justify-between hidden'>
-                        <button onClick={() => onCategoryClick("sd")} className={`${sd && (dark ? "bg-gradient-to-br from-white/20 to-transparent border-[1px] border-white/10" : "bg-gradient-to-br from-white to-transparent shadow-lg")} rounded-2xl   p-4`}>Software Development</button>
-                        <button onClick={() => onCategoryClick("ai")} className={`${ai && (dark ? "bg-gradient-to-br from-white/20 to-transparent border-[1px] border-white/10" : "bg-gradient-to-br from-white to-transparent shadow-lg")} rounded-2xl   p-4`}>Artificial Intelligence</button>
+                        <button onClick={() => onCategoryClick("sd")} className={`${sd && (currentMode == "dark" ? "bg-gradient-to-br from-white/20 to-transparent border-[1px] border-white/10" : "bg-gradient-to-br from-white to-transparent shadow-lg")} rounded-2xl   p-4`}>Software Development</button>
+                        <button onClick={() => onCategoryClick("ai")} className={`${ai && (currentMode == "dark" ? "bg-gradient-to-br from-white/20 to-transparent border-[1px] border-white/10" : "bg-gradient-to-br from-white to-transparent shadow-lg")} rounded-2xl   p-4`}>Artificial Intelligence</button>
 
-                        <button onClick={() => onCategoryClick("iot")} className={`${iot && (dark ? "bg-gradient-to-br from-white/20 to-transparent border-[1px] border-white/10" : "bg-gradient-to-br from-white to-transparent shadow-lg")} rounded-2xl   p-4`}>Internet of Things</button>
-                        <button onClick={() => onCategoryClick("other")} className={`${other && (dark ? "bg-gradient-to-br from-white/20 to-transparent border-[1px] border-white/10" : "bg-gradient-to-br from-white to-transparent shadow-lg")} rounded-2xl   p-4`}>Other</button>
+                        <button onClick={() => onCategoryClick("iot")} className={`${iot && (currentMode == "dark" ? "bg-gradient-to-br from-white/20 to-transparent border-[1px] border-white/10" : "bg-gradient-to-br from-white to-transparent shadow-lg")} rounded-2xl   p-4`}>Internet of Things</button>
+                        <button onClick={() => onCategoryClick("other")} className={`${other && (currentMode == "dark" ? "bg-gradient-to-br from-white/20 to-transparent border-[1px] border-white/10" : "bg-gradient-to-br from-white to-transparent shadow-lg")} rounded-2xl   p-4`}>Other</button>
                     </div>
                 </div>
                 <div className='flex flex-wrap gap-5 mt-10 justify-center   '>

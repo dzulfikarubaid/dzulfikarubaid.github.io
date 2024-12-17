@@ -70,14 +70,17 @@ import { ModuleKind } from 'typescript'
           bodyElement.classList.add('bg-gradient-to-br', 'from-neutral-950', 'to-neutral-800', "text-neutral-200");
         }
       };
+      import store, {setMode} from '../redux/redux';
       if(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches){
         updateBodyClass("dark")
+        store.dispatch(setMode("dark"))
       }
       else{
         updateBodyClass("light")
+        store.dispatch(setMode("light"))
       }
       // Get data from redux toolkit
-      import store from '../redux/redux';
+      
       let mode = ""
         store.subscribe(() => 
         {
