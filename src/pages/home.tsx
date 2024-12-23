@@ -302,7 +302,7 @@ const Home = () => {
                     <Card className='!w-full'>
                         <div className='flex justify-center items-center text-4xl gap-4'>
                             <button onClick={onSun} className={` ${currentMode == "light" && "bg-gradient-to-br from-white to-transparent  shadow-md !text-orange-400"} p-5 rounded-2xl w-full flex items-center justify-center text-neutral-500 `}><BiSun></BiSun></button>
-                            <button onClick={onMoon} className={` ${dark && "bg-gradient-to-br from-white/20 to-transparent  shadow-md !text-indigo-200"} p-5 rounded-2xl w-full flex items-center justify-center text-neutral-500`}><BiMoon></BiMoon></button>
+                            <button onClick={onMoon} className={` ${currentMode == "dark" && "bg-gradient-to-br from-white/20 to-transparent  shadow-md !text-indigo-200"} p-5 rounded-2xl w-full flex items-center justify-center text-neutral-500`}><BiMoon></BiMoon></button>
                         </div>
                     </Card>
                     <Card>
