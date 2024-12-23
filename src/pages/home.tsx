@@ -1,8 +1,8 @@
-import { desc, div, title } from 'framer-motion/client'
+import { desc, div, time, title } from 'framer-motion/client'
 import React, { useEffect, useState } from 'react'
 import { BiDownload, BiHeart, BiLinkExternal, BiLogoDjango, BiLogoGithub, BiLogoGmail, BiLogoInstagram, BiLogoInstagramAlt, BiLogoJavascript, BiLogoLinkedin, BiLogoPython, BiMailSend, BiMessage, BiMessageAdd, BiMoon, BiRightTopArrowCircle, BiSend, BiShow, BiSolidRightTopArrowCircle, BiSun, BiX } from 'react-icons/bi'
 import db from '../firebase/init';
-import { collection, addDoc } from "firebase/firestore";
+import { collection, addDoc, Timestamp } from "firebase/firestore";
 import { Swiper, SwiperSlide } from 'swiper/react';
 // Import Swiper styles
 import 'swiper/css';
@@ -404,10 +404,10 @@ const Home = () => {
                                                 <button onClick={() => {
                                                     addDoc(collection(db, "messages"), {
                                                         name: name,
-                                                        message: message
+                                                        message: message,
+                                                        timestamp: Timestamp.now(),
                                                     })
                                                         .then(() => {
-
                                                             setAfterMessage(true);
                                                             setType("");
                                                         })
